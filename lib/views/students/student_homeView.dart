@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ioc_chatbot/Logics/auth_state.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
 import 'package:ioc_chatbot/Backend/models/postModel.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
@@ -19,7 +20,7 @@ import 'package:ioc_chatbot/views/students/subjectAnnouncements.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 
-import 'chat_list.dart';
+import 'teacher_chat_list.dart';
 
 class StudentsHomeView extends StatefulWidget {
   const StudentsHomeView({Key key}) : super(key: key);
@@ -86,6 +87,7 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
                     lastName: items['lastName'],
                     docID: items['docID'],
                     profilePic: items['profilePic'],
+                    section: items['section'],
                     gender: items['gender'],
                     subjects: items['subjects'],
                   );
@@ -116,6 +118,7 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: currentPage,
         showElevation: false,
+        backgroundColor: AppColors.backgroundScreen,
         itemCornerRadius: 24,
         curve: Curves.easeInOutCubic,
         onItemSelected: (index) => setState(() => currentPage = index),
@@ -123,7 +126,7 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
           BottomNavyBarItem(
             icon: Icon(Icons.message_outlined),
             title: Text('chats').tr(),
-            activeColor: Colors.blue,
+            activeColor: AppColors.blackColor,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
@@ -134,18 +137,19 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
                         userModel.docID, _advModel.docID),
                     builder: (context, i) {
                       return StreamProvider.value(
-                        value: _postServices.streamPosts(_advModel.docID),
+                        value: _postServices.getAdvPosts(_advModel.docID),
                         builder: (ct, child) {
                           return FittedBox(
                             child: Stack(
                               children: [
                                 FittedBox(
                                   child: Icon(
-                                    Icons.notification_important,
+                                    Icons.notifications_active,
                                   ),
                                 ),
                                 if (ct.watch<List<PostModel>>() != null ||
                                     context.watch<List<PostModel>>() != null)
+
                                   ct.watch<List<PostModel>>().length -
                                               context
                                                   .watch<List<PostModel>>()
@@ -204,8 +208,8 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
                       );
                     },
                   ),
-            title: Text('declarations').tr(),
-            activeColor: Colors.blue,
+            title: Text('advisor').tr(),
+            activeColor: AppColors.blackColor,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
@@ -213,12 +217,13 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
                 ? Container()
                 : StreamProvider.value(
                     value: _postServices.getSubjectNotificationCounter(
+
                         userModel.docID,
                         userModel.subjects == null ? [-1] : userModel.subjects,
                         userModel.section),
                     builder: (context, i) {
                       return StreamProvider.value(
-                        value: _postServices.streamSubjectPosts(advModel.docID,
+                        value: _postServices.getSubjectPosts(advModel.docID,
                             userModel.subjects, userModel.section),
                         builder: (ct, child) {
                           return FittedBox(
@@ -270,7 +275,8 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
                                                 : Text(
                                                     userModel.subjects == null
                                                         ? "0"
-                                                        : "${ct.watch<List<PostModel>>().length - context.watch<List<PostModel>>().length}",
+                                                        : "${ct.watch<List<PostModel>>().length -
+                                                        context.watch<List<PostModel>>().length}",
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 8,
@@ -286,8 +292,8 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
                       );
                     },
                   ),
-            title: Text('Subject Notifi').tr(),
-            activeColor: Colors.blue,
+            title: Text('subject').tr(),
+            activeColor: AppColors.blackColor,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
@@ -295,7 +301,7 @@ class _StudentsHomeViewState extends State<StudentsHomeView> {
             title: Text(
               'my_profile',
             ).tr(),
-            activeColor: Colors.blue,
+            activeColor: AppColors.blackColor,
             textAlign: TextAlign.center,
           ),
         ],

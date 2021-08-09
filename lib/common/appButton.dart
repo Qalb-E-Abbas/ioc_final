@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 
 import 'dynamicFontSize.dart';
 
@@ -8,8 +8,9 @@ class AppButton extends StatelessWidget {
   final String text;
   final bool isDark;
   final VoidCallback onTap;
+  final double width;
 
-  AppButton({this.text, this.isDark, this.onTap});
+  AppButton({this.text, this.isDark, this.onTap, this.width});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -21,8 +22,9 @@ class AppButton extends StatelessWidget {
           onTap: () => onTap(),
           child: Container(
             height: 55,
+            width: width,
             decoration: BoxDecoration(
-                color: FrontEndConfigs.buttonColor,
+                color: AppColors.buttonColor,
                 borderRadius: BorderRadius.circular(15)),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28.0),

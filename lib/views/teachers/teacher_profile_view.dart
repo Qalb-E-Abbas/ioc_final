@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ioc_chatbot/common/appBar.dart';
 import 'package:ioc_chatbot/common/appButton.dart';
 import 'package:ioc_chatbot/common/dynamicFontSize.dart';
 import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:ioc_chatbot/common/horizontal_sized_box.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
 import 'package:ioc_chatbot/views/editProfile.dart';
 import 'package:ioc_chatbot/views/teachers/teacher_homeView.dart';
@@ -31,52 +32,7 @@ class _TeacherProfileViewState extends State<TeacherProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Profile",
-            style: TextStyle(
-                color: FrontEndConfigs.darkTextColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 22),
-          ),
-          centerTitle: true,
-          actions: [
-            _file != null
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () async {},
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: FrontEndConfigs.blueTextColor),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 3),
-                          child: Center(
-                            child: DynamicFontSize(
-                              label: "Update Profile",
-                              fontSize: 13,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                : Container()
-          ],
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TeacherHomeView()));
-              },
-              icon: Image.asset('assets/images/back.png'),
-            ),
-          ),
-        ),
+        appBar: customAppBar(context, text: "profile", showArrow: false),
         body: FutureBuilder(
             future: storage.ready,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -115,18 +71,22 @@ class _TeacherProfileViewState extends State<TeacherProfileView> {
           children: [
             VerticalSpace(20),
             _getCover(context),
-            VerticalSpace(120),
-            DynamicFontSize(
-              label: "About Me",
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
+            VerticalSpace(30),
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: DynamicFontSize(
+                label: "about_me",
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             VerticalSpace(16),
-            customRow(context, Icons.mail, userModel.email),
+            customRow(context, 'assets/images/mail.png', userModel.email),
             VerticalSpace(10),
-            customRow(context, Icons.format_list_numbered, userModel.regNo),
+            customRow(context, 'assets/images/regNo.png', userModel.regNo),
             VerticalSpace(24),
             AppButton(
+              width: MediaQuery.of(context).size.width * 0.45,
               isDark: true,
               onTap: () {
                 Navigator.push(
@@ -134,7 +94,7 @@ class _TeacherProfileViewState extends State<TeacherProfileView> {
                     MaterialPageRoute(
                         builder: (context) => EditProfile(userModel)));
               },
-              text: "Edit",
+              text: "edit",
             ),
           ],
         ),
@@ -143,52 +103,37 @@ class _TeacherProfileViewState extends State<TeacherProfileView> {
   }
 
   _getCover(BuildContext context) {
-    return Stack(
-      overflow: Overflow.visible,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Stack(
-          children: [
-            Container(
-              height: 180,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/cover.png'),
-                      fit: BoxFit.cover)),
-            ),
-          ],
-        ),
-        Positioned.fill(
-          right: 10,
-          bottom: -60,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 120,
-              width: 120,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    userModel.profilePic,
-                    fit: BoxFit.cover,
-                  )),
-            ),
+
+        VerticalSpace(20),
+
+        Container(
+          height: 120,
+          width: 120,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
           ),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.network(
+                userModel.profilePic,
+                fit: BoxFit.cover,
+              )),
         ),
-        Positioned.fill(
-            bottom: -90,
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: DynamicFontSize(
-                  label: userModel.firstName + " " + userModel.lastName,
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                )))
+
+        VerticalSpace(15),
+
+
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: DynamicFontSize(
+              label: userModel.firstName + " " + userModel.lastName,
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ))
       ],
     );
   }
@@ -211,9 +156,9 @@ class _TeacherProfileViewState extends State<TeacherProfileView> {
     });
   }
 
-  customRow(BuildContext context, IconData iconData, String text) {
+  customRow(BuildContext context, String imageUrl, String text) {
     return Container(
-      color: FrontEndConfigs.authFieldBackgroundColor,
+      color: AppColors.authFieldBackgroundColor,
       width: MediaQuery.of(context).size.width,
       child: Center(
         child: Card(
@@ -225,10 +170,7 @@ class _TeacherProfileViewState extends State<TeacherProfileView> {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: Row(
                 children: [
-                  Icon(
-                    iconData,
-                    color: FrontEndConfigs.blueTextColor,
-                  ),
+                  Image.asset(imageUrl, height: 20,),
                   HorizontalSpace(30),
                   Flexible(
                     child: DynamicFontSize(

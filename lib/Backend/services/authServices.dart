@@ -12,28 +12,30 @@ class AuthServices with ChangeNotifier {
   User _user;
   Status _status = Status.Uninitialized;
   CollectionReference _db = FirebaseFirestore.instance.collection('iocUsers');
+
   AuthServices.instance() : _auth = FirebaseAuth.instance {
     _auth.idTokenChanges().listen(_onAuthStateChanged);
   }
 
-  ///Using Stream to listen to Authentication State
+  ///Using Stream to listen to Authentication State, we use this in main.dart to get status
   Stream<User> get authState => _auth.authStateChanges();
 
-  ///It will use to set the login State
+  ///we are using that to set the login State
   void setState(Status status) {
     _status = status;
     notifyListeners();
   }
 
-  ///It will give the current user login State
+  ///we are using thi to current user login State
   Status get status => _status;
 
-  ///It will give the current firebase user.
+  ///we are using that to get the current firebase user.
   User get user => _user;
   final CollectionReference _userCollectionRef =
       FirebaseFirestore.instance.collection('iocUsers');
 
-  ///This will method will authenticate users from Firebase.
+
+  /// Sign In
   Future<User> signIn(BuildContext context,
       {String email, String password}) async {
     try {
@@ -50,7 +52,7 @@ class AuthServices with ChangeNotifier {
     }
   }
 
-  ///This method will register user to firebase.
+  /// USERS REGISTRATION
   Future<User> signUp(BuildContext context,
       {String email, String password}) async {
     try {
@@ -66,7 +68,7 @@ class AuthServices with ChangeNotifier {
     }
   }
 
-  ///This method will reset the password.
+  ///This method is used to reset the password.
   Future forgotPassword(BuildContext context, {String email}) async {
     try {
       setState(Status.Authenticating);
@@ -89,7 +91,8 @@ class AuthServices with ChangeNotifier {
     return Future.delayed(Duration.zero);
   }
 
-  ///Constantly check for the users whether he loggedIn or loggedOut
+
+  /// it constantly checks a user whether user loggedIn or loggedOut
   Future<void> _onAuthStateChanged(User firebaseUser) async {
     if (firebaseUser == null) {
       _status = Status.Unauthenticated;
@@ -98,4 +101,8 @@ class AuthServices with ChangeNotifier {
       _status = Status.Authenticated;
     }
   }
+
+
+
+
 }

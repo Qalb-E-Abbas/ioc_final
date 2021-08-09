@@ -6,7 +6,7 @@ import 'package:ioc_chatbot/Logics/auth_state.dart';
 import 'package:ioc_chatbot/Logics/userProvider.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/views/students/language_view.dart';
 import 'package:ioc_chatbot/views/students/loginView.dart';
 import 'package:ioc_chatbot/views/students/registeredCourses.dart';
@@ -18,6 +18,7 @@ import 'dynamicFontSize.dart';
 import 'heigh_sized_box.dart';
 
 class EndDrawer extends StatelessWidget {
+
   AuthServices _services = AuthServices.instance();
   final LocalStorage storage = new LocalStorage(BackEndConfigs.loginLocalDB);
   bool initialized = false;
@@ -66,7 +67,7 @@ class EndDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: FrontEndConfigs.blueTextColor,
+              color: AppColors.backgroundScreen,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,10 +87,10 @@ class EndDrawer extends StatelessWidget {
           ),
           if (userModel.role == "S")
             ListTile(
-              title: Text('Register Courses').tr(),
+              title: Text("reg_courses").tr(),
               trailing: Icon(
                 Icons.app_registration,
-                color: Colors.red,
+                color: Colors.black,
               ),
               onTap: () {
                 Navigator.push(
@@ -99,7 +100,7 @@ class EndDrawer extends StatelessWidget {
               },
             ),
           ListTile(
-            title: Text('Log Out').tr(),
+            title: Text('log_out').tr(),
             trailing: Icon(
               Icons.logout,
               color: Colors.red,
@@ -126,7 +127,7 @@ class EndDrawer extends StatelessWidget {
             title: Text('language').tr(),
             trailing: Icon(
               Icons.language,
-              color: FrontEndConfigs.blueTextColor,
+              color: AppColors.blueTextColor,
             ),
             onTap: () {
               Navigator.of(context).push(

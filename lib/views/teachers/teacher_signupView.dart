@@ -11,8 +11,9 @@ import 'package:ioc_chatbot/common/appButton.dart';
 import 'package:ioc_chatbot/common/authTextField.dart';
 import 'package:ioc_chatbot/common/dynamicFontSize.dart';
 import 'package:ioc_chatbot/common/heigh_sized_box.dart';
+import 'package:ioc_chatbot/common/horizontal_sized_box.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/models/subjectModel.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
 import 'package:ioc_chatbot/Backend/services/authServices.dart';
@@ -69,23 +70,24 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
             context, MaterialPageRoute(builder: (context) => TeacherLoginView()));
       },
       child: Scaffold(
+        backgroundColor: AppColors.backgroundScreen,
         body: LoadingOverlay(
           isLoading: isLoading,
           progressIndicator: LoadingWidget(),
-          color: FrontEndConfigs.blueTextColor,
+          color: AppColors.blueTextColor,
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  VerticalSpace(70),
+                  VerticalSpace(30),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                    child: Image.asset('assets/images/bike.png'),
+                    child: Image.asset('assets/images/Logo2.png'),
                   ),
-                  VerticalSpace(50),
+
                   AuthTextField(
-                    image: "assets/images/Profile.png",
+                    image: "assets/images/person.png",
                     label: "first_name",
                     controller: fisrtName,
                     validator: (val) => val.isEmpty
@@ -93,21 +95,21 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                         : null,
                   ),
                   AuthTextField(
-                    image: "assets/images/Profile.png",
+                    image: "assets/images/person.png",
                     label: "last_name",
                     controller: lastName,
                     validator: (val) =>
                         val.isEmpty ? "Last Name field cannot be empty." : null,
                   ),
                   AuthTextField(
-                    image: "assets/images/Profile.png",
+                    image: "assets/images/gender.png",
                     label: "gender",
                     controller: gender,
                     validator: (val) =>
                         val.isEmpty ? "Gender field cannot be empty." : null,
                   ),
                   AuthTextField(
-                    image: "assets/images/Profile.png",
+                    image: "assets/images/regNo1.png",
                     label: "reg_No",
                     controller: regNo,
                     validator: (val) => val.isEmpty
@@ -116,14 +118,14 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                     maxLines: 1,
                   ),
                   AuthTextField(
-                    image: "assets/images/Message.png",
+                    image: "assets/images/mail.png",
                     label: "email",
                     controller: _emailController,
                     validator: (val) =>
                         val.isEmpty ? "Email field cannot be empty." : null,
                   ),
                   AuthTextField(
-                    image: "assets/images/Lock.png",
+                    image: "assets/images/password.png",
                     label: "password",
                     onPwdTap: () {
                       isVisible = !isVisible;
@@ -135,11 +137,11 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                     isPasswordField: true,
                     visible: !isVisible,
                   ),
-                  VerticalSpace(10),
+
                   _getImagePicker(context),
                   VerticalSpace(10),
                   _getSubjectDropDown(context),
-                  VerticalSpace(10),
+                  VerticalSpace(20),
                   AppButton(
                     onTap: () {
                       if (!_formKey.currentState.validate()) {
@@ -165,8 +167,11 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                           label: "have_an_acc",
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
-                          color: FrontEndConfigs.lightTextColor,
+                          color: AppColors.lightTextColor,
                         ),
+
+                        HorizontalSpace(6),
+
                         InkWell(
                           onTap: () {
                             Navigator.pushReplacement(
@@ -177,7 +182,7 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                           child: DynamicFontSize(
                             label: "sign_in",
                             fontSize: 16,
-                            color: FrontEndConfigs.blueTextColor,
+                            color: AppColors.blueTextColor,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -197,35 +202,43 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
   Widget _getImagePicker(BuildContext context) {
     var status = Provider.of<AppState>(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
       child: Container(
+        //color: FrontEndConfigs.backgroundScreen,
         width: MediaQuery.of(context).size.width,
-        height: 60,
+        height: 65,
         decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(7)),
+            color: AppColors.scaffoldBackgroundColor,
+            border: Border.all(color: AppColors.scaffoldBackgroundColor),
+            borderRadius: BorderRadius.circular(15)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.7,
+                decoration: BoxDecoration(
+                  color: AppColors.scaffoldBackgroundColor,),
+                // width: MediaQuery.of(context).size.width * 0.7,
                 child: Text(
+
                   _file == null
                       ? "Choose an Image..."
                       : _file.path.split('/').last,
                   style: Theme.of(context)
                       .textTheme
                       .caption
-                      .merge(TextStyle(color: Theme.of(context).primaryColor)),
+                      .merge(TextStyle(
+                    fontSize: 16,
+                    // color: FrontEndConfigs.blueTextColor,
+                  )),
                 ),
               ),
             ),
             IconButton(
                 icon: Icon(
                   Icons.attach_file,
-                  color: Theme.of(context).primaryColor,
+                  color: AppColors.blueTextColor,
                 ),
                 onPressed: () async {
                   getFile(true);
@@ -303,12 +316,14 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
 
   Widget _getSubjectDropDown(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Container(
-        height: 60,
+        height: 65,
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Theme.of(context).primaryColor)),
+            color: AppColors.scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: AppColors.scaffoldBackgroundColor)),
         child: FittedBox(
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -317,7 +332,7 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                 padding: const EdgeInsets.only(left: 18.0),
                 child: Icon(
                   Icons.room_preferences_outlined,
-                  color: Colors.grey[700],
+                  color: AppColors.blueTextColor,
                   size: 27,
                 ),
               ),
@@ -338,7 +353,10 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                       setState(() {});
                     },
                     underline: SizedBox(),
-                    hint: Text("Select Subject"),
+                    hint: Text("Select Subject",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),),
                     isExpanded: true,
                   ),
                 ),

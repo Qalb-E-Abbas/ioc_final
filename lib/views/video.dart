@@ -4,12 +4,16 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/material.dart';
+import 'package:ioc_chatbot/common/appBar.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 
 const APP_ID = 'b0b07117e5a84016b227ca7dc27a3eee';
+
 const Token =
-    '006b0b07117e5a84016b227ca7dc27a3eeeIAASwXq08mTn1yAhS0gTZLZauqqtAy/3ThLJ0crdd7v/7oxaP2kAAAAAEAA/pxv4zfQLYQEAAQDN9Ath';
+    '006b0b07117e5a84016b227ca7dc27a3eeeIABoq4lewOKjwOBwy3pFSuk+hbhXKcZ43LDiSgtq1ykbEr0sPhgAAAAAEACe0CRJtCQSYQEAAQCzJBJh';
 
 class VideoCall extends StatefulWidget {
+
   final String channelName;
   final ClientRole role;
   const VideoCall({Key key, this.channelName, this.role}) : super(key: key);
@@ -279,11 +283,7 @@ class _VideoCallState extends State<VideoCall> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Video Call Demo'),
-        centerTitle: true,
-      ),
-      backgroundColor: Colors.black,
+      appBar: customAppBar(context, text: "video_call"),
       body: Center(
         child: Stack(
           children: <Widget>[

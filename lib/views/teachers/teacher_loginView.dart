@@ -9,7 +9,7 @@ import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:ioc_chatbot/common/horizontal_sized_box.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/enums.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/services/authServices.dart';
 import 'package:ioc_chatbot/views/elements/dialog.dart';
 import 'package:ioc_chatbot/views/teachers/teacher_homeView.dart';
@@ -41,10 +41,11 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
     node = FocusScope.of(context);
     var auth = Provider.of<AuthServices>(context);
     return Scaffold(
+      backgroundColor: AppColors.backgroundScreen,
       body: LoadingOverlay(
         isLoading: isLoading,
         progressIndicator: LoadingWidget(),
-        color: FrontEndConfigs.blueTextColor,
+        color: AppColors.blueTextColor,
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -53,18 +54,18 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
                 VerticalSpace(70),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                  child: Image.asset('assets/images/bike.png'),
+                  child: Image.asset('assets/images/Logo2.png', ),
                 ),
-                VerticalSpace(50),
+
                 AuthTextField(
-                  image: "assets/images/Message.png",
+                  image: "assets/images/regNo1.png",
                   label: "reg_No",
                   controller: _emailController,
                   validator: (val) =>
                       val.isEmpty ? "Email field cannot be empty." : null,
                 ),
                 AuthTextField(
-                  image: "assets/images/Lock.png",
+                  image: "assets/images/password.png",
                   label: "password",
                   validator: (val) =>
                       val.isEmpty ? "Password field cannot be empty." : null,
@@ -92,7 +93,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
                         child: DynamicFontSize(
                           label: 'forgot_password',
                           fontSize: 16,
-                          color: FrontEndConfigs.blueTextColor,
+                          color: AppColors.blueTextColor,
                           fontWeight: FontWeight.w500,
                         ),
                       )
@@ -129,7 +130,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
                         label: "Don't_have_acc",
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: FrontEndConfigs.lightTextColor,
+                        color: AppColors.lightTextColor,
                       ),
                       HorizontalSpace(5),
                       InkWell(
@@ -142,7 +143,7 @@ class _TeacherLoginViewState extends State<TeacherLoginView> {
                         child: DynamicFontSize(
                           label: "sign_up",
                           fontSize: 16,
-                          color: FrontEndConfigs.blueTextColor,
+                          color: AppColors.blueTextColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

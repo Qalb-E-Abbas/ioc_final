@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ioc_chatbot/Logics/auth_state.dart';
-import 'package:ioc_chatbot/views/students/loginView.dart';
-import 'package:ioc_chatbot/views/students/student_homeView.dart';
-
 import 'teacher_homeView.dart';
 import 'teacher_loginView.dart';
 

@@ -6,13 +6,15 @@ class UserProvider extends ChangeNotifier {
   List<UserModel> _usersList = [];
 
   void setUsersList(List<UserModel> usersList) {
+    
     _usersList = usersList;
+    usersList.map((e) => print("LIST : ${e.toJson(e.docID)}")).toList();
     notifyListeners();
   }
 
   void setUsers(UserModel userModel) {
     _usersList.add(userModel);
-
+print("LIST : $userModel");
     notifyListeners();
   }
 

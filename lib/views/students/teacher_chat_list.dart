@@ -5,7 +5,7 @@ import 'package:ioc_chatbot/common/dynamicFontSize.dart';
 import 'package:ioc_chatbot/common/end_drawer.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/models/chatModel.dart';
 import 'package:ioc_chatbot/Backend/models/messagesModel.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
@@ -20,7 +20,7 @@ import 'package:ioc_chatbot/views/students/loginView.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 
-import '../contactList.dart';
+import 'contactList.dart';
 
 class ChatList extends StatefulWidget {
   final String id;
@@ -97,9 +97,7 @@ class _ChatListState extends State<ChatList> {
               ),
         centerTitle: true,
         title: !isSearchingAllow
-            ? Text(
-                "Chat",
-              )
+            ? DynamicFontSize(label: "chats",)
             : SearchField(onChanged: (val) {
                 setState(() {
                   _searchedOrders(val);
@@ -187,7 +185,8 @@ class _ChatListState extends State<ChatList> {
                 : _getUI(context, userModel);
           }),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.chat),
+        child: Icon(Icons.chat, color: Colors.black,),
+        backgroundColor: AppColors.backgroundScreen,
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => ContactList()));
@@ -229,7 +228,7 @@ class _ChatListState extends State<ChatList> {
                     child: Divider(
                       thickness: 1,
                       height: 1,
-                      color: FrontEndConfigs.blueTextColor,
+                      color: AppColors.blueTextColor,
                     ),
                   ),
                   StreamProvider.value(
@@ -249,7 +248,7 @@ class _ChatListState extends State<ChatList> {
                                               0.65,
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          color: FrontEndConfigs
+                                          color: AppColors
                                               .authFieldBackgroundColor,
                                           child: ListView.separated(
                                               separatorBuilder: (ctx, index) {
@@ -261,7 +260,7 @@ class _ChatListState extends State<ChatList> {
                                                   child: Divider(
                                                     thickness: 1,
                                                     height: 1,
-                                                    color: FrontEndConfigs
+                                                    color: AppColors
                                                         .blueTextColor,
                                                   ),
                                                 );
@@ -379,7 +378,7 @@ class _ChatListState extends State<ChatList> {
                                                                         child:
                                                                             Container(
                                                                           color:
-                                                                              FrontEndConfigs.authFieldBackgroundColor,
+                                                                              AppColors.authFieldBackgroundColor,
                                                                           width: MediaQuery.of(context)
                                                                               .size
                                                                               .width,
@@ -417,7 +416,7 @@ class _ChatListState extends State<ChatList> {
                                                                                     ? Container(
                                                                                         height: 24,
                                                                                         width: 24,
-                                                                                        decoration: BoxDecoration(shape: BoxShape.circle, color: FrontEndConfigs.blueTextColor),
+                                                                                        decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.blueTextColor),
                                                                                         child: Center(
                                                                                           child: DynamicFontSize(
                                                                                             label: chatCountContext.read<List<MessagesModel>>().length.toString(),
@@ -467,7 +466,7 @@ class _ChatListState extends State<ChatList> {
                                                                       .role)));
                                             },
                                             child: Container(
-                                              color: FrontEndConfigs
+                                              color: AppColors
                                                   .authFieldBackgroundColor,
                                               width: MediaQuery.of(context)
                                                   .size

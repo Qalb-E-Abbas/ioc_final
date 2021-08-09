@@ -9,26 +9,28 @@ import 'package:provider/provider.dart';
 import 'errorStrings.dart';
 
 class LoginBusinessLogic {
+
   UserServices _userServices = UserServices();
   final LocalStorage storage = new LocalStorage(BackEndConfigs.loginLocalDB);
 
-  Future loginUserLogic(
+  Future loginStudentLogic(
     BuildContext context, {
     @required String regNo,
     @required String password,
   }) async {
     var _authServices = Provider.of<AuthServices>(context, listen: false);
-    var _error = Provider.of<ErrorString>(context, listen: false);
-    var login = Provider.of<AuthServices>(context, listen: false);
+    // var _error = Provider.of<ErrorString>(context, listen: false);
+    // var login = Provider.of<AuthServices>(context, listen: false);
     _authServices.setState(Status.Authenticating);
     await _userServices
-        .loginViaRegNO(regNo: regNo, password: password)
+        .loginViaRegNOForStudents(regNo: regNo, password: password)
         .first
         .then((value) async {
       print(value);
       if (value.isNotEmpty) {
         await storage.setItem(BackEndConfigs.userDetailsLocalStorage,
             value[0].toJson(value[0].docID));
+
         _authServices.setState(Status.Authenticated);
 
         return _userServices
@@ -56,7 +58,7 @@ class LoginBusinessLogic {
     var _error = Provider.of<ErrorString>(context, listen: false);
     var login = Provider.of<AuthServices>(context, listen: false);
     await _userServices
-        .loginViaRegNO(regNo: regNo, password: password)
+        .loginViaRegNOForTeachers(regNo: regNo, password: password)
         .first
         .then((value) async {
       print(value);

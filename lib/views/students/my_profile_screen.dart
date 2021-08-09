@@ -4,13 +4,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ioc_chatbot/common/appBar.dart';
 import 'package:ioc_chatbot/common/appButton.dart';
 import 'package:ioc_chatbot/common/dynamicFontSize.dart';
 import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:ioc_chatbot/common/horizontal_sized_box.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
 import 'package:ioc_chatbot/Backend/services/updateLocalStorageServices.dart';
 import 'package:ioc_chatbot/Backend/services/uploadFileServices.dart';
@@ -44,18 +45,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Widget build(BuildContext context) {
     pr = ProgressDialog(context, isDismissible: false);
     return Scaffold(
-        appBar: AppBar(
-          leading: Container(
-            height: 1,
-            width: 1,
-          ),
-          title: Text(
-            "profile",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w500, fontSize: 22),
-          ).tr(),
-          centerTitle: true,
-        ),
+        appBar: customAppBar(context, text: "profile", showArrow: false),
         body: FutureBuilder(
             future: storage.ready,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -110,35 +100,53 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _getCover(context),
-            DynamicFontSize(
-              label: "about_me",
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
+
+            VerticalSpace(30),
+            Padding(
+              padding: const EdgeInsets.only(left: 5),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: DynamicFontSize(
+                  label: "about_me",
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ),
             VerticalSpace(16),
-            customListTile(
-                context, Icons.school, "Semester: ${userModel.semester}", ''),
+
+
+
+            customRow(context, 'assets/images/book.png', "Semester: ${userModel.semester}"),
+
+
             VerticalSpace(10),
-            customRow(context, Icons.mail, userModel.email),
+
+            customRow(context, 'assets/images/mail.png', userModel.email),
+
             VerticalSpace(10),
-            customRow(context, Icons.format_list_numbered, userModel.regNo),
+
+            customRow(context, 'assets/images/regNo.png', userModel.regNo),
+
             VerticalSpace(10),
             if (getAdv() != null)
               customListTile(context, Icons.person, 'assign_adv',
                   advModel.firstName + " " + advModel.lastName),
-            VerticalSpace(10),
+            VerticalSpace(20),
             AppButton(
+              width: MediaQuery.of(context).size.width * 0.45,
               isDark: true,
               onTap: () {
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => EditProfile(userModel)));
-              },
-              text: "Edit",
+
+                },
+              text: "edit",
             ),
             VerticalSpace(10),
           ],
@@ -158,8 +166,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               children: [
                 VerticalSpace(20),
                 Container(
-                  height: 120,
-                  width: 120,
+                  height: 140,
+                  width: 140,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
@@ -177,14 +185,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 ),
               ],
             ),
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: IconButton(
-                    icon: Icon(Icons.upload_outlined),
-                    onPressed: () => getFile(false)),
-              ),
-            ),
+
           ],
         ),
         VerticalSpace(20),
@@ -244,9 +245,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     });
   }
 
-  customRow(BuildContext context, IconData iconData, String text) {
+  customRow(BuildContext context, String imageUrl, String text) {
     return Container(
-      color: FrontEndConfigs.authFieldBackgroundColor,
+      color: AppColors.authFieldBackgroundColor,
       width: MediaQuery.of(context).size.width,
       child: Center(
         child: Card(
@@ -258,10 +259,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: Row(
                 children: [
-                  Icon(
-                    iconData,
-                    color: FrontEndConfigs.blueTextColor,
-                  ),
+                  Image.asset(imageUrl, height: 20,),
                   HorizontalSpace(30),
                   Flexible(
                     child: DynamicFontSize(
@@ -280,7 +278,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   customListTile(
       BuildContext context, IconData iconData, String title, String subtitle) {
     return Container(
-      color: FrontEndConfigs.authFieldBackgroundColor,
+      color: AppColors.authFieldBackgroundColor,
       width: MediaQuery.of(context).size.width,
       child: Center(
         child: Card(
@@ -293,7 +291,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Icon(
                 iconData,
-                color: FrontEndConfigs.blueTextColor,
+                color: AppColors.blueTextColor,
               ),
             ),
             subtitle:

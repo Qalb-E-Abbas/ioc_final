@@ -1,4 +1,5 @@
 class MessagesModel {
+
   String senderName;
   String sendID;
   String docID;

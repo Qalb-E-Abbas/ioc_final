@@ -9,6 +9,7 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
+
   bool isLoggedIn = false;
 
   Future<bool> getUserLoginState() async {

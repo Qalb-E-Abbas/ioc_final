@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ioc_chatbot/Backend/services/authServices.dart';
 import 'package:ioc_chatbot/Logics/errorStrings.dart';
+import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -27,12 +28,25 @@ class ForgotPasswordView extends StatelessWidget {
   Widget _getUI(BuildContext context) {
     return Column(
       children: [
-        TextFormField(
-          controller: _emailController,
+
+
+        VerticalSpace(20),
+
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: TextFormField(
+            decoration: InputDecoration(
+              hintText: 'Enter your email'
+            ),
+            controller: _emailController,
+          ),
         ),
+
+        VerticalSpace(20),
+
         AppButton(
           isDark: true,
-          text: "Send Password Reset Email",
+          text: "submit",
           onTap: () async {
             await pr.show();
             _forgotPassword(context);

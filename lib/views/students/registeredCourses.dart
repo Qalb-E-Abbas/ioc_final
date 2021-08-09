@@ -36,6 +36,22 @@ class _RegisteredCourseState extends State<RegisteredCourse> {
   UserServices _userServices = UserServices();
   ProgressDialog pr;
 
+
+  getRegisterdCourses(String docID) {
+    _userServices.getRegisteredCourses(docID).first.then((value) {
+      value.subjects.map((e) {
+        if(!selectedSubject.contains(e)){
+          selectedSubject.add(e);
+          setState(() {
+
+          });
+        }
+      }).toList();
+
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     pr = ProgressDialog(context, isDismissible: false);
@@ -64,6 +80,8 @@ class _RegisteredCourseState extends State<RegisteredCourse> {
                   );
                 }
 
+
+
                 initialized = true;
               }
               return snapshot.data == null ? LoadingWidget() : _getUI(context);
@@ -71,6 +89,7 @@ class _RegisteredCourseState extends State<RegisteredCourse> {
   }
 
   Widget _getUI(BuildContext context) {
+    getRegisterdCourses(userModel.docID);
     var status = Provider.of<AppState>(context);
     return Column(
       children: [
@@ -99,10 +118,12 @@ class _RegisteredCourseState extends State<RegisteredCourse> {
           text: "Register Courses",
           onTap: () async {
             await pr.show();
+
             _userServices
                 .addSubjects(context,
                     userModel: userModel, subjects: selectedSubject)
                 .then((value) async {
+
               if (status.getStateStatus() == StateStatus.IsFree) {
                 await pr.hide();
                 showNavigationDialog(context,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:ioc_chatbot/both_apps.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/views/students/loginView.dart';
-
 
 class OnBoardingPage extends StatelessWidget {
   @override
@@ -11,38 +11,54 @@ class OnBoardingPage extends StatelessWidget {
         child: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: 'A reader lives a thousand lives',
-              body: 'The man who never reads lives only one.',
-              image: buildImage('assets/images/bike.png'),
+              title: 'Chitti The Robot',
+              body: 'Hello Sir, How Can I Help You?',
+              image: buildImage('assets/images/onboard1.jpg'),
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Featured Books',
+              title: 'You\'re just one step away',
               body: 'Available right at your fingerprints',
-              image: buildImage('assets/images/bike.png'),
+              image: buildImage('assets/images/screen1.png'),
               decoration: getPageDecoration(),
             ),
-            PageViewModel(
-              title: 'Simple UI',
-              body: 'For enhanced reading experience',
-              image: buildImage('assets/images/bike.png'),
-              decoration: getPageDecoration(),
-            ),
+
 
           ],
           done: GestureDetector(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (builder)=> BothApps()));
+
+                Navigator.of(context).pushReplacement(
+
+                    PageRouteBuilder(
+                        transitionDuration: const Duration(seconds: 1),
+                        pageBuilder: (_, animation, __){
+
+                          animation = CurvedAnimation(parent:
+                          animation, curve: Curves.easeOut);
+
+
+                          return ScaleTransition(
+                            scale: animation,
+                            child: BothApps(),
+                          );
+                        })
+                );
               },
 
-              child: Text('Go', style: TextStyle(fontWeight: FontWeight.w600))),
+              child: Text('Go', style: TextStyle(fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.blueTextColor,))),
           onDone: () => goToHome(context),
           showSkipButton: true,
           skip: Text('Skip', style: TextStyle(
-              color: Colors.black
+              color: AppColors.blueTextColor,
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+
           ),),
           onSkip: () => goToHome(context),
-          next: Icon(Icons.arrow_forward, color: Colors.black),
+          next: Icon(Icons.fast_forward, color: AppColors.buttonColor),
           dotsDecorator: getDotDecoration(),
           onChange: (index) => print('Page $index selected'),
           globalBackgroundColor: Colors.white,
@@ -57,7 +73,22 @@ class OnBoardingPage extends StatelessWidget {
       );
 
   void goToHome(context) =>
-      Navigator.of(context).push(MaterialPageRoute(builder: (builder)=> LoginView()));
+      Navigator.of(context).pushReplacement(
+
+          PageRouteBuilder(
+              transitionDuration: const Duration(seconds: 1),
+              pageBuilder: (_, animation, __){
+
+                animation = CurvedAnimation(parent:
+                animation, curve: Curves.easeOut);
+
+
+                return ScaleTransition(
+                  scale: animation,
+                  child: BothApps(),
+                );
+              })
+      );
 
   Widget buildImage(String path) =>
       Center(child: Image.asset(path, width: 350));
@@ -75,8 +106,8 @@ class OnBoardingPage extends StatelessWidget {
 
   PageDecoration getPageDecoration() =>
       PageDecoration(
-        titleTextStyle: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        bodyTextStyle: TextStyle(fontSize: 20),
+        titleTextStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, ),
+        bodyTextStyle: TextStyle(fontSize: 25),
         descriptionPadding: EdgeInsets.all(16).copyWith(bottom: 0),
         imagePadding: EdgeInsets.all(24),
         pageColor: Colors.white,

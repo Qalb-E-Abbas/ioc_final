@@ -6,6 +6,7 @@ import 'package:ioc_chatbot/common/appBar.dart';
 import 'package:ioc_chatbot/common/appButton.dart';
 import 'package:ioc_chatbot/common/authTextField.dart';
 import 'package:ioc_chatbot/common/heigh_sized_box.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
 import 'package:ioc_chatbot/Backend/services/updateLocalStorageServices.dart';
@@ -51,7 +52,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     pr = ProgressDialog(context, isDismissible: true);
     return Scaffold(
-      appBar: customAppBar(context, text: "Edit Profile"),
+      appBar: customAppBar(context, text: "edit_profile", showArrow: false),
       body: _getUI(context),
     );
   }
@@ -60,20 +61,29 @@ class _EditProfileState extends State<EditProfile> {
     print(widget.model.lastName);
     return Column(
       children: [
+
+        VerticalSpace(20),
+
         _getCover(context),
+
+        VerticalSpace(20),
         AuthTextField(
-          image: "assets/images/Message.png",
+          image: "assets/images/person.png",
           controller: _firstNameController,
           label: "First Name",
         ),
         AuthTextField(
-          image: "assets/images/Message.png",
+          image: "assets/images/person.png",
           controller: _lastNameController,
           label: "Last Name",
         ),
+
+        VerticalSpace(10),
+
         AppButton(
+          width: MediaQuery.of(context).size.width * 0.4,
           isDark: true,
-          text: "Edit Profile",
+          text: "save",
           onTap: () async {
             await pr.show();
             _getEditData();
@@ -157,8 +167,8 @@ class _EditProfileState extends State<EditProfile> {
               children: [
                 VerticalSpace(20),
                 Container(
-                  height: 120,
-                  width: 120,
+                  height: 130,
+                  width: 130,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
@@ -180,7 +190,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: IconButton(
-                    icon: Icon(Icons.upload_outlined),
+                    icon: Icon(Icons.upload_outlined, size: 30, color: AppColors.backgroundScreen,),
                     onPressed: () => getFile(false)),
               ),
             ),

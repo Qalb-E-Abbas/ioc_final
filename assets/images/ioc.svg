@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.2.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1125 2436" style="enable-background:new 0 0 1125 2436;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#Union_4_2_);}
+	.st2{fill:none;}
+	.st3{fill:none;stroke:#FFFFFF;}
+	.st4{fill:#FFFFFF;}
+	.st5{fill:#A56DF7;}
+	.st6{font-family:'TimesNewRomanPS-BoldMT';}
+	.st7{font-size:72.3239px;}
+	.st8{fill:none;stroke:#A56DF7;}
+	.st9{font-size:73.9275px;}
+</style>
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-0.5" y1="1218" x2="1125.5" y2="1218">
+	<stop  offset="0" style="stop-color:#A56DF7"/>
+	<stop  offset="1" style="stop-color:#53377C"/>
+</linearGradient>
+<rect x="-0.5" y="-0.5" class="st0" width="1126" height="2437"/>
+<g>
+	<g>
+		<g>
+			
+				<linearGradient id="Union_4_2_" gradientUnits="userSpaceOnUse" x1="25.5929" y1="1761.9744" x2="28.3073" y2="1759.1385" gradientTransform="matrix(138.305 0 0 -99.603 -3158.0149 175880.6875)">
+				<stop  offset="0" style="stop-color:#A56DF7"/>
+				<stop  offset="1" style="stop-color:#53377C"/>
+			</linearGradient>
+			<path id="Union_4" class="st1" d="M562.51,667.03l-165.67,3.14c0,0-96.5-24.56-96.5-95.61v-62.8c0,0,41.95-208.38,253.86-218.79
+				v-0.41c2.8,0,5.57,0.03,8.31,0.1c2.73-0.07,5.51-0.1,8.3-0.1v0.41c211.92,10.4,253.86,218.79,253.86,218.79v62.8
+				c0,71.05-96.47,95.61-96.47,95.61L562.51,667.03z"/>
+		</g>
+		<g id="Group_171" transform="translate(18.791 27.905)">
+			<g id="Rectangle_52">
+				<path class="st2" d="M435.8,370.45h215.83c45.85,0,83.01,37.17,83.01,83.01l0,0c0,45.85-37.17,83.01-83.01,83.01H435.8
+					c-45.85,0-83.01-37.17-83.01-83.01l0,0C352.78,407.62,389.95,370.45,435.8,370.45z"/>
+				<path class="st3" d="M435.8,372.35h215.83c44.8,0,81.12,36.32,81.12,81.12l0,0c0,44.8-36.32,81.12-81.12,81.12H435.8
+					c-44.8,0-81.12-36.32-81.12-81.12l0,0C354.68,408.67,391,372.35,435.8,372.35z"/>
+			</g>
+			<g id="Group_170" transform="translate(21.897 13.138)">
+				<circle id="Ellipse_66" class="st4" cx="455.4" cy="448.63" r="41.51"/>
+				<circle id="Ellipse_67" class="st4" cx="604.83" cy="448.63" r="41.51"/>
+			</g>
+		</g>
+	</g>
+	<text transform="matrix(0.9131 0 0 1 371.5739 760.7324)" class="st5 st6 st7">IOC ChatBot</text>
+</g>
+<g>
+	<g id="bot_protection_c_gradient" transform="translate(-207.244 -60.762)">
+		<g id="Group_174" transform="translate(207.244 60.762)">
+			<path id="Union_4_1_" class="st4" d="M562.98,1376.83l-180.61,3.43c0,0-105.2-26.78-105.2-104.23v-68.47
+				c0,0,45.74-227.17,276.75-238.51v-0.44c3.06,0,6.08,0.04,9.06,0.11c2.98-0.07,6.01-0.11,9.05-0.11v0.44
+				c231.03,11.34,276.75,238.51,276.75,238.51v68.47c0,77.45-105.16,104.23-105.16,104.23L562.98,1376.83z"/>
+			<g id="Group_171_1_" transform="translate(18.791 27.905)">
+				<g id="Rectangle_52_1_">
+					<path class="st5" d="M426.54,1056.03h235.29c49.98,0,90.5,40.52,90.5,90.5l0,0c0,49.98-40.52,90.5-90.5,90.5H426.54
+						c-49.98,0-90.5-40.52-90.5-90.5l0,0C336.04,1096.55,376.56,1056.03,426.54,1056.03z"/>
+					<path class="st8" d="M426.54,1058.1h235.29c48.84,0,88.43,39.59,88.43,88.43l0,0c0,48.84-39.59,88.43-88.43,88.43H426.54
+						c-48.84,0-88.43-39.59-88.43-88.43l0,0C338.11,1097.69,377.7,1058.1,426.54,1058.1z"/>
+				</g>
+				<g id="Group_170_1_" transform="translate(21.897 13.138)">
+					<circle id="Ellipse_66_1_" class="st4" cx="449.89" cy="1142.44" r="45.25"/>
+					<circle id="Ellipse_67_1_" class="st4" cx="612.79" cy="1142.44" r="45.25"/>
+				</g>
+			</g>
+		</g>
+	</g>
+	<text transform="matrix(0.9131 0 0 1 363.9277 1466.7783)" class="st5 st6 st9">IOC ChatBot</text>
+</g>
+</svg>

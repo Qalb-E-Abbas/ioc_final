@@ -6,11 +6,11 @@ import 'package:ioc_chatbot/Backend/services/user_services.dart';
 
 
 enum SignUpStatus { Initial, Registered, Registering, Failed }
-enum ValidatedStatus { Validated, NotValidated }
+
 
 class SignUpBusinessLogic with ChangeNotifier {
   SignUpStatus _status = SignUpStatus.Initial;
-  ValidatedStatus _vStatus = ValidatedStatus.NotValidated;
+
 
   SignUpStatus get status => _status;
 

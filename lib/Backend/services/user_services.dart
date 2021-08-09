@@ -24,6 +24,8 @@ class UserServices {
   final CollectionReference _ref =
       FirebaseFirestore.instance.collection('iocUsers');
 
+
+
   ///Add IOC Users data to Cloud Firestore
   Future<void> addIocData(
       User user, UserModel stdModel, BuildContext context) {
@@ -32,17 +34,41 @@ class UserServices {
 
 
   ///Login User via Reg No
-  Stream<List<UserModel>> loginViaRegNO({String regNo, String password}) {
+  Stream<List<UserModel>> loginViaRegNOForTeachers({String regNo, String password}) {
     return _ref
         .where('regNo', isEqualTo: regNo)
         .where('password', isEqualTo: password)
+    .where('role', isEqualTo: "T")
         .snapshots()
         .map((snap) =>
             snap.docs.map((e) => UserModel.fromJson(e.data())).toList());
   }
 
 
-  ///Fetch IOC Users data
+  ///Login User via Reg No
+  Stream<List<UserModel>> loginViaRegNOForStudents({String regNo, String password}) {
+    return _ref
+        .where('regNo', isEqualTo: regNo)
+        .where('password', isEqualTo: password)
+    .where('role', isEqualTo: "S")
+        .snapshots()
+        .map((snap) =>
+            snap.docs.map((e) => UserModel.fromJson(e.data())).toList());
+  }
+
+
+
+
+  ///Get Registered Courses in course registration
+  Stream<UserModel> getRegisteredCourses(String docID){
+    return _ref.doc(docID).snapshots()
+        .map((snap) => UserModel.fromJson(snap.data()));
+  }
+
+
+
+
+  ///Fetch IOC Users data in Teacher chatList/Student ChatList/Adv Announcement List
   Stream<UserModel> fetchStudentsData(String docID) {
     print("I am $docID");
     return _ref
@@ -50,6 +76,7 @@ class UserServices {
         .snapshots()
         .map((snap) => UserModel.fromJson(snap.data()));
   }
+
 
   ///Edit LoggedIn IOC Users Data
   Future<void> editDP(
@@ -62,7 +89,9 @@ class UserServices {
         {'profilePic': imageUrl, 'firstName': firstName, 'lastName': lastName});
   }
 
-  ///Add Subjects
+
+
+  ///Add Subjects, initially they will be null, update them
   Future<void> addSubjects(BuildContext context,
       {UserModel userModel, List subjects}) async {
     Provider.of<AppState>(context, listen: false)
@@ -75,11 +104,15 @@ class UserServices {
         .stateStatus(StateStatus.IsFree);
   }
 
-  ///Get My Advisor
+
+
+  ///Get My Advisor, in student Login
   Stream<List<UserModel>> getMyAdvisor(BuildContext context, {String regNo}) {
     return _ref.where('students', arrayContains: regNo).snapshots().map(
         (snap) => snap.docs.map((e) => UserModel.fromJson(e.data())).toList());
   }
+
+
 
   ///Go Offline/Online
   Future<void> changeOnlineStatus({UserModel userModel, bool isOnline}) async {
@@ -97,7 +130,7 @@ class UserServices {
 
   /// Fetch all teachers
 
-  Stream<List<UserModel>> fetchAllTeachers(UserModel userModel) {
+  Stream<List<UserModel>> fetchAllTeachersINContactList(UserModel userModel) {
     return _ref
 
     /// Don't get students, but teachers
@@ -109,9 +142,10 @@ class UserServices {
   }
 
 
-  /// Fetch Students via reg no ????? WHAT?
+  /// Fetch Students via reg no in contact List
   Stream<List<UserModel>> fetchStudentsViaRegNo(UserModel userModel) {
     return _ref
+    /// Only students
         .where('docID', isNotEqualTo: userModel.regNo)
         .where('role', isEqualTo: "S")
         .snapshots()

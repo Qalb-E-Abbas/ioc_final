@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:ioc_chatbot/Logics/animation.dart';
 import 'package:ioc_chatbot/Logics/applicationChatBznzLogic.dart';
@@ -10,7 +11,7 @@ import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:ioc_chatbot/common/horizontal_sized_box.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/models/messagesModel.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
 import 'package:ioc_chatbot/Backend/services/chatServices.dart';
@@ -94,9 +95,13 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
         userModel: UserModel(docID: getMyID()), isOnline: false);
     _userServices.updateLastSeen(
         userModel: UserModel(docID: getMyID()),
-        time: "${DateTime.now().hour} : ${DateTime.now().minute}");
+        time: "Last seen ${DateFormat('hh:mm a').format(DateTime.now())}"
+
+    );
     super.dispose();
   }
+
+
 
   @override
   void initState() {
@@ -181,7 +186,7 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                             height: 60,
                             padding: const EdgeInsets.symmetric(horizontal: 6),
                             width: MediaQuery.of(context).size.width,
-                            color: FrontEndConfigs.blueTextColor,
+                            color: AppColors.backgroundScreen,
                             child: Center(
                                 child: Row(
                                     mainAxisAlignment:
@@ -256,7 +261,7 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                                       InkWell(
                                         onTap: onJoin,
                                         child: Icon(
-                                          Icons.call,
+                                          Icons.video_call,
                                           color: Colors.black,
                                           size: 24,
                                         ),
@@ -267,15 +272,18 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                         Expanded(
                           child: Container(
                             child: StreamProvider.value(
+
                               value: _advisorChatServices.getMessages(
                                   context, getChatID()),
                               builder: (msjContext, child) {
+
                                 return StreamProvider.value(
-                                  value: _advisorChatServices.getMsjsToRead(
+                                  value: _advisorChatServices.getMessagesToRead(
                                       context,
                                       getChatID(),
                                       UserModel(docID: getMyID())),
                                   builder: (markReadMsjContext, child) {
+
                                     Timer(
                                         Duration(milliseconds: 300),
                                         () => _scrollController.animateTo(
@@ -284,11 +292,15 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                                             duration:
                                                 Duration(milliseconds: 700),
                                             curve: Curves.ease));
+
                                     return msjContext
                                                 .watch<List<MessagesModel>>() ==
                                             null
                                         ? LoadingWidget()
+
+
                                         : ListView.builder(
+
                                             controller: _scrollController,
                                             itemCount: msjContext
                                                 .watch<List<MessagesModel>>()
@@ -307,7 +319,7 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                                                             i]
                                                         .sendID ==
                                                     userModel.docID,
-                                                time: "12:00",
+                                                time: DateFormat('hh:mm a').format(DateTime.now()),
                                               );
                                             });
                                   },
@@ -316,9 +328,13 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                             ),
                           ),
                         ),
+
+                        /// If chatbot is activated
+
                         TypingIndicator(
                           showIndicator: isTyping,
                         ),
+
                         Container(
                           alignment: Alignment.bottomCenter,
                           width: MediaQuery.of(context).size.width,
@@ -364,6 +380,11 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                                             duration:
                                                 Duration(milliseconds: 700),
                                             curve: Curves.ease));
+
+
+
+                                    /// Initiating chat, if T is offline, activate intents of dialogflow
+
                                     _advisorChatLogin
                                         .initChat(context,
                                             chatID: getChatID(),
@@ -381,29 +402,41 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                                         .then((value) async {
                                       {
                                         print("Called");
+
                                         if (ctxt.read<UserModel>().isOnline ==
                                                 false &&
                                             ctxt.read<UserModel>().role ==
-                                                "T") {
+                                                "T")
+                                        {
                                           isTyping = true;
                                           setState(() {});
-                                          if (messageController.text.contains(
+
+
+                                          /// Convert small to capital and vise versa
+
+                                          if (messageController.text.toUpperCase().contains(
                                                   ctxt
                                                       .read<UserModel>()
-                                                      .firstName) ||
-                                              messageController.text.contains(
+                                                      .firstName.toUpperCase()) ||
+                                              messageController
+                                                  .text.toUpperCase().contains(
                                                   ctxt
                                                       .read<UserModel>()
-                                                      .lastName)) {
+                                                      .lastName.toUpperCase())) {
+                                            print(messageController
+                                                .text.toUpperCase());
+
                                             DetectIntentResponse response =
                                                 await dialogFlowtter
                                                     .detectIntent(
                                               queryInput: QueryInput(
                                                   text: TextInput(
                                                       text: messageController
-                                                          .text)),
+                                                          .text.toUpperCase())),
                                             );
                                             messageController.clear();
+
+                                            /// Irrelavant Question
                                             _advisorChatLogin.initChat(context,
                                                 chatID: getChatID(),
                                                 model: MessagesModel(
@@ -450,6 +483,12 @@ class _ChatMessageScreenState extends State<ChatMessageScreen> {
                                       }
                                     });
                                   },
+
+
+
+
+
+
                                   icon: Icon(
                                     Icons.send,
                                     color: messageController.text.isEmpty
@@ -551,7 +590,7 @@ class MessageTile extends StatelessWidget {
                 : EdgeInsets.only(right: 30),
             padding: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 10),
             decoration: BoxDecoration(
-              color: sendByMe ? Colors.white : Color(0xffc8f7c5),
+              color: sendByMe ? Colors.white : AppColors.backgroundScreen,
               borderRadius: sendByMe
                   ? BorderRadius.only(
                       topLeft: Radius.circular(10),
@@ -565,12 +604,12 @@ class MessageTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(message ?? '',
+                Text( message ?? '',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         height: 1.3,
-                        color: Colors.black,
-                        fontSize: 13,
+                        color: sendByMe ? Colors.black : Colors.white,
+                        fontSize: 14,
                         fontWeight: FontWeight.w300)),
                 VerticalSpace(5),
                 Text(

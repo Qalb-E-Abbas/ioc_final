@@ -8,13 +8,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ioc_chatbot/Logics/auth_state.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
 import 'package:ioc_chatbot/views/elements/navigation_dialog.dart';
 import 'package:ioc_chatbot/views/teachers/make_announcement.dart';
-import 'package:ioc_chatbot/views/teachers/teacher_chatList.dart';
+import 'package:ioc_chatbot/views/teachers/student_chatList.dart';
 import 'package:ioc_chatbot/views/teachers/teacher_profile_view.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'makeAdvAnnouncements.dart';
 
@@ -30,6 +32,7 @@ class _TeacherHomeViewState extends State<TeacherHomeView> {
   PageController _pageController;
 
   List pages = [];
+
   final LocalStorage storage = new LocalStorage(BackEndConfigs.loginLocalDB);
 
   bool initialized = false;
@@ -102,7 +105,9 @@ class _TeacherHomeViewState extends State<TeacherHomeView> {
 
   Widget _getUI(BuildContext context, UserModel _model) {
     return Scaffold(
+
       bottomNavigationBar: BottomNavyBar(
+        backgroundColor: AppColors.backgroundScreen,
         selectedIndex: currentPage,
         showElevation: false,
         itemCornerRadius: 24,
@@ -112,19 +117,19 @@ class _TeacherHomeViewState extends State<TeacherHomeView> {
           BottomNavyBarItem(
             icon: Icon(Icons.message_outlined),
             title: Text('chats').tr(),
-            activeColor: Colors.blue,
+            activeColor: AppColors.blackColor,
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.notifications_active_outlined),
+            title: Text('advisor').tr(),
+            activeColor: AppColors.blackColor,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
             icon: Icon(Icons.notification_important),
-            title: Text('adv').tr(),
-            activeColor: Colors.blue,
-            textAlign: TextAlign.center,
-          ),
-          BottomNavyBarItem(
-            icon: Icon(Icons.notification_important),
-            title: Text('sbuject').tr(),
-            activeColor: Colors.blue,
+            title: Text('subject').tr(),
+            activeColor: AppColors.blackColor,
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
@@ -132,7 +137,7 @@ class _TeacherHomeViewState extends State<TeacherHomeView> {
             title: Text(
               'my_profile',
             ).tr(),
-            activeColor: Colors.blue,
+            activeColor: AppColors.blackColor,
             textAlign: TextAlign.center,
           ),
         ],

@@ -7,9 +7,9 @@ import 'package:ioc_chatbot/views/elements/searchField.dart';
 import 'package:ioc_chatbot/views/students/chat_messages_screen.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
-
-import 'elements/loading_widget.dart';
-import 'elements/searchFieldBackArrow.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../elements/loading_widget.dart';
+import '../elements/searchFieldBackArrow.dart';
 
 class ContactList extends StatefulWidget {
   @override
@@ -24,7 +24,14 @@ class _ContactListState extends State<ContactList> {
   UserModel userModel = UserModel();
   List<UserModel> searchedUsers = [];
   int i = 0;
+
   bool isSearchingAllow = false;
+
+  @override
+  initState(){
+    Provider.of<UserProvider>(context, listen: false).clearList();
+    super.initState();
+  }
 
   void _searchedOrders(String val) async {
     var usersList = Provider.of<UserProvider>(context, listen: false);
@@ -81,8 +88,8 @@ class _ContactListState extends State<ContactList> {
           centerTitle: true,
           title: !isSearchingAllow
               ? Text(
-                  "Contact List",
-                )
+                  "cont_list",
+                ).tr()
               : SearchField(onChanged: (val) {
                   setState(() {
                     _searchedOrders(val);
@@ -142,7 +149,9 @@ class _ContactListState extends State<ContactList> {
   Widget _getUI(BuildContext context, UserModel _userModel) {
     var usersProvider = Provider.of<UserProvider>(context);
     return StreamProvider.value(
-      value: _userServices.fetchAllTeachers(_userModel),
+
+      value: _userServices.fetchAllTeachersINContactList(_userModel),
+
       builder: (context, child) {
         if (usersProvider
             .getUsers.isEmpty) if (context.watch<List<UserModel>>() != null)

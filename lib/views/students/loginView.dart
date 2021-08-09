@@ -11,7 +11,7 @@ import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:ioc_chatbot/common/horizontal_sized_box.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/enums.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/services/authServices.dart';
 import 'package:ioc_chatbot/views/elements/dialog.dart';
 import 'package:ioc_chatbot/views/students/signUp.dart';
@@ -40,14 +40,19 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+
     node = FocusScope.of(context);
+
     var auth = Provider.of<AuthServices>(context);
+
     print(auth.status);
+
     return Scaffold(
+      backgroundColor: AppColors.backgroundScreen,
       body: LoadingOverlay(
         isLoading: isLoading,
         progressIndicator: LoadingWidget(),
-        color: FrontEndConfigs.blueTextColor,
+        color: AppColors.blueTextColor,
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -56,18 +61,18 @@ class _LoginViewState extends State<LoginView> {
                 VerticalSpace(70),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                  child: Image.asset('assets/images/bike.png'),
+                  child: Image.asset('assets/images/Logo2.png'),
                 ),
-                VerticalSpace(50),
+
                 AuthTextField(
-                  image: "assets/images/Message.png",
+                  image: "assets/images/regNo1.png",
                   label: "reg_No",
                   controller: _emailController,
                   validator: (val) =>
                       val.isEmpty ? "Email field cannot be empty." : null,
                 ),
                 AuthTextField(
-                  image: "assets/images/Lock.png",
+                  image: "assets/images/password.png",
                   label: "password",
                   validator: (val) =>
                       val.isEmpty ? "Password field cannot be empty." : null,
@@ -93,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
                         child: DynamicFontSize(
                           label: 'forgot_password',
                           fontSize: 16,
-                          color: FrontEndConfigs.blueTextColor,
+                          color: AppColors.blueTextColor,
                           fontWeight: FontWeight.w500,
                         ),
                       )
@@ -130,7 +135,7 @@ class _LoginViewState extends State<LoginView> {
                         label: "Don't_have_acc",
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: FrontEndConfigs.lightTextColor,
+                        color: AppColors.lightTextColor,
                       ),
                       HorizontalSpace(5),
                       InkWell(
@@ -143,7 +148,7 @@ class _LoginViewState extends State<LoginView> {
                         child: DynamicFontSize(
                           label: "sign_up",
                           fontSize: 16,
-                          color: FrontEndConfigs.blueTextColor,
+                          color: AppColors.blueTextColor,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -165,7 +170,7 @@ class _LoginViewState extends State<LoginView> {
       @required AuthServices auth,
       @required String password}) {
     data
-        .loginUserLogic(
+        .loginStudentLogic(
       context,
       regNo: email,
       password: password,
@@ -174,7 +179,9 @@ class _LoginViewState extends State<LoginView> {
       if (auth.status == Status.Authenticated) {
         isLoading = false;
         setState(() {});
+
         UserLoginStateHandler.saveUserLoggedInSharedPreference(true);
+
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Wrapper()));
       } else {

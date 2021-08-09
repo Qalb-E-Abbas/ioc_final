@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class AuthTextField extends StatelessWidget {
@@ -42,12 +42,12 @@ class AuthTextField extends StatelessWidget {
               onEditingComplete: () => onEditingComplete(),
               style: TextStyle(
                   letterSpacing: 1,
-                  color: FrontEndConfigs.authTextFieldLabelColor,
+                  color: AppColors.authTextFieldLabelColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w400),
               decoration: InputDecoration(
                   filled: true,
-                  fillColor: FrontEndConfigs.authFieldBackgroundColor,
+                  fillColor: AppColors.authFieldBackgroundColor,
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(
                         left: 19.0, top: 19, bottom: 19, right: 10),
@@ -86,7 +86,7 @@ class AuthTextField extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12)),
                   hintStyle: TextStyle(
                       letterSpacing: 1,
-                      color: FrontEndConfigs.authTextFieldLabelColor,
+                      color: AppColors.authTextFieldLabelColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w400)),
             ),

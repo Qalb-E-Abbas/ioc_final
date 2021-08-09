@@ -3,6 +3,7 @@ import 'package:ioc_chatbot/Backend/models/userModel.dart';
 
 
 class UpdateLocalStorageData {
+
   ///Update Local Storage Data
   Future<UserModel> updateLocalStorageData(String docID, UserModel userModel) {
     print("HI I AM CALLED");
@@ -14,4 +15,5 @@ class UpdateLocalStorageData {
       return UserModel.fromJson(value.data());
     });
   }
+
 }

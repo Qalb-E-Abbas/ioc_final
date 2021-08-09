@@ -1,4 +1,5 @@
 class UserModel {
+
   String docID;
   String firstName;
   String lastName;
@@ -15,6 +16,7 @@ class UserModel {
   String section;
   List subjects;
   List students;
+
 
   UserModel({
     this.docID,

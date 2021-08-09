@@ -1,4 +1,5 @@
 class PostModel {
+
   String docID;
   String postText;
   String postImage;
@@ -10,6 +11,7 @@ class PostModel {
   String advImage;
   String time;
   int sortTime;
+
 
   PostModel(
       {this.docID,

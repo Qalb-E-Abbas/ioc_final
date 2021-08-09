@@ -6,6 +6,8 @@ import 'package:ioc_chatbot/Logics/app_state.dart';
 import 'package:provider/provider.dart';
 
 class PostServices {
+
+
   CollectionReference _postCollection =
       FirebaseFirestore.instance.collection('postCollection');
 
@@ -20,20 +22,24 @@ class PostServices {
         .stateStatus(StateStatus.IsFree);
   }
 
-  ///Get Post
-  Stream<List<PostModel>> streamSubjectPosts(
+
+  ///Get subject Posts
+  Stream<List<PostModel>> getSubjectPosts(
       String teacherID, List subject, String section) {
     print("HI ${section}");
     return _postCollection
         .where('subject', whereIn: subject)
+        .orderBy('sortTime', descending: true)
         .where('section', isEqualTo: section)
         .snapshots()
         .map((event) =>
             event.docs.map((e) => PostModel.fromJson(e.data())).toList());
   }
 
-  ///Get Post
-  Stream<List<PostModel>> streamPosts(String advID) {
+
+
+  ///Get Adv Post
+  Stream<List<PostModel>> getAdvPosts(String advID) {
     print("Adv ID : ${advID}");
     return _postCollection
         .where('advID', isEqualTo: advID)
@@ -44,6 +50,10 @@ class PostServices {
             event.docs.map((e) => PostModel.fromJson(e.data())).toList());
   }
 
+
+
+
+
   Stream<List<PostModel>> getAdvNotificationCounter(String uid, String advID) {
     return _postCollection
         .where('advID', isEqualTo: advID)
@@ -53,6 +63,9 @@ class PostServices {
         .map((event) =>
             event.docs.map((e) => PostModel.fromJson(e.data())).toList());
   }
+
+
+
 
   Stream<List<PostModel>> getSubjectNotificationCounter(
       String uid, List subject, String section) {
@@ -65,6 +78,21 @@ class PostServices {
         .map((event) =>
             event.docs.map((e) => PostModel.fromJson(e.data())).toList());
   }
+
+
+  ///Mark Notification as Read
+  Future<void> markNotificationAsRead(String uid, String notifiID) async {
+    return FirebaseFirestore.instance
+        .collection('postCollection')
+        .doc(notifiID)
+        .update({
+      'users': FieldValue.arrayUnion([uid])
+    });
+  }
+
+
+
+/// > OPTIONALS
 
   ///Update Post
   Future<void> updatePost(BuildContext context,
@@ -83,6 +111,7 @@ class PostServices {
         .stateStatus(StateStatus.IsFree);
   }
 
+
   ///Delete Post
   Future<void> deletePost(BuildContext context, {String postID}) async {
     Provider.of<AppState>(context, listen: false)
@@ -92,13 +121,7 @@ class PostServices {
         .stateStatus(StateStatus.IsFree);
   }
 
-  ///Mark Notification as Read
-  Future<void> markNotificationAsRead(String uid, String notifiID) async {
-    return FirebaseFirestore.instance
-        .collection('postCollection')
-        .doc(notifiID)
-        .update({
-      'users': FieldValue.arrayUnion([uid])
-    });
-  }
+
+
+
 }

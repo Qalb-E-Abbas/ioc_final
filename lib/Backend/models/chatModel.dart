@@ -1,10 +1,13 @@
+
 class ChatModel {
+
   String chatID;
   List<String> users;
   String lastMessage;
   int time;
 
   ChatModel({this.chatID, this.users, this.time, this.lastMessage});
+
 
   ChatModel.fromJson(Map<String, dynamic> json) {
     chatID = json['chatID'];
@@ -21,4 +24,5 @@ class ChatModel {
     data['time'] = DateTime.now().microsecondsSinceEpoch;
     return data;
   }
+
 }

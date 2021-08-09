@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ioc_chatbot/common/dynamicFontSize.dart';
 import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:ioc_chatbot/common/horizontal_sized_box.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 
 class StudentProfileView extends StatefulWidget {
   final String imageUrl;
@@ -31,7 +31,7 @@ class _StudentProfileViewState extends State<StudentProfileView> {
         title: Text(
           "Profile",
           style: TextStyle(
-              color: FrontEndConfigs.darkTextColor,
+              color: AppColors.darkTextColor,
               fontWeight: FontWeight.w500,
               fontSize: 22),
         ),
@@ -45,7 +45,7 @@ class _StudentProfileViewState extends State<StudentProfileView> {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: FrontEndConfigs.blueTextColor),
+                          color: AppColors.blueTextColor),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 3),
@@ -181,7 +181,7 @@ class _StudentProfileViewState extends State<StudentProfileView> {
 
   customRow(BuildContext context, IconData iconData, String text) {
     return Container(
-      color: FrontEndConfigs.authFieldBackgroundColor,
+      color: AppColors.authFieldBackgroundColor,
       width: MediaQuery.of(context).size.width,
       child: Center(
         child: Card(
@@ -195,7 +195,7 @@ class _StudentProfileViewState extends State<StudentProfileView> {
                 children: [
                   Icon(
                     iconData,
-                    color: FrontEndConfigs.blueTextColor,
+                    color: AppColors.blueTextColor,
                   ),
                   HorizontalSpace(30),
                   Flexible(
@@ -215,7 +215,7 @@ class _StudentProfileViewState extends State<StudentProfileView> {
   customListTile(
       BuildContext context, IconData iconData, String title, String subtitle) {
     return Container(
-      color: FrontEndConfigs.authFieldBackgroundColor,
+      color: AppColors.authFieldBackgroundColor,
       width: MediaQuery.of(context).size.width,
       child: Center(
         child: Card(
@@ -228,7 +228,7 @@ class _StudentProfileViewState extends State<StudentProfileView> {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Icon(
                 iconData,
-                color: FrontEndConfigs.blueTextColor,
+                color: AppColors.blueTextColor,
               ),
             ),
             subtitle:

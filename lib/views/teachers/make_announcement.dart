@@ -11,7 +11,7 @@ import 'package:ioc_chatbot/common/dynamicFontSize.dart';
 import 'package:ioc_chatbot/common/heigh_sized_box.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/models/postModel.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
 import 'package:ioc_chatbot/Backend/services/postServices.dart';
@@ -47,7 +47,7 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
     pr = ProgressDialog(context, isDismissible: false);
 
     return Scaffold(
-        appBar: customAppBar(context, text: 'Make Announcement'),
+        appBar: customAppBar(context, text: 'sub_announcement', showArrow: false),
         body: FutureBuilder(
             future: storage.ready,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -92,20 +92,21 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
                   height: MediaQuery.of(context).size.height * 0.2,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: FrontEndConfigs.authFieldBackgroundColor,
+                    color: AppColors.authFieldBackgroundColor,
+                    border: Border.all(color: AppColors.backgroundScreen),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: TextFormField(
                     controller: _textController,
                     style: TextStyle(
                         letterSpacing: 1,
-                        color: FrontEndConfigs.authTextFieldLabelColor,
+                        color: AppColors.authTextFieldLabelColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w400),
                     decoration: InputDecoration(
                         hintText: 'description'.tr(),
                         filled: true,
-                        fillColor: FrontEndConfigs.authFieldBackgroundColor,
+                        fillColor: AppColors.authFieldBackgroundColor,
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(12)),
@@ -120,7 +121,7 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
                             borderRadius: BorderRadius.circular(12)),
                         hintStyle: TextStyle(
                             letterSpacing: 1,
-                            color: FrontEndConfigs.authTextFieldLabelColor,
+                            color: AppColors.authTextFieldLabelColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w400)),
                   )),
@@ -128,14 +129,15 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
               _getSubjectDropDown(context),
               VerticalSpace(10),
               _getImagePicker(context),
-              VerticalSpace(20),
+              VerticalSpace(30),
               AppButton(
                 onTap: () async {
                   await pr.show();
                   _createPost(status);
                 },
-                text: 'Submit',
-                isDark: false,
+                text: 'submit',
+
+                isDark: true,
               )
             ],
           ),
@@ -146,13 +148,13 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
 
   _getImagePicker(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 60,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: Colors.green)),
+            border: Border.all(color: AppColors.backgroundScreen)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Row(
@@ -162,7 +164,7 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
                 child: Flexible(
                   child: DynamicFontSize(
                     label: _file == null
-                        ? "Attach Image"
+                        ? "attach_image"
                         : _file.path.split('/').last,
                     fontSize: 16,
                     isAlignCenter: false,
@@ -175,7 +177,7 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
                 onTap: () => getFile(),
                 child: Icon(
                   Icons.attach_file,
-                  color: Colors.green,
+                  color: Colors.black,
                   size: 19,
                 ),
               ),
@@ -220,7 +222,9 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
             advID: userModel.docID,
             sortTime: DateTime.now().microsecondsSinceEpoch,
             time:
-                "${DateTime.now().hour}:${DateTime.now().minute}  ${DateTime.now().day} ${DateTime.now().month} ${DateTime.now().year}",
+
+            "${DateFormat('hh:mm a').format(DateTime.now())},"
+                "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
             postText: _textController.text),
       );
     }).then((value) async {
@@ -238,21 +242,21 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
 
   Widget _getSubjectDropDown(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
         height: 60,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Theme.of(context).primaryColor)),
+            border: Border.all(color: AppColors.backgroundScreen)),
         child: FittedBox(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 18.0),
+                padding: const EdgeInsets.all(5),
                 child: Icon(
                   Icons.room_preferences_outlined,
-                  color: Colors.grey[700],
+                  color: Colors.black,
                   size: 27,
                 ),
               ),
@@ -273,7 +277,7 @@ class _MakeAnnouncementState extends State<MakeAnnouncement> {
                       setState(() {});
                     },
                     underline: SizedBox(),
-                    hint: Text("Select Section"),
+                    hint: Text("select_sec").tr(),
                     isExpanded: true,
                   ),
                 ),

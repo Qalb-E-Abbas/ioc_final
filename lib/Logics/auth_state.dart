@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginStateHandler {
+
   static String sharedPreferenceUserLoggedInKey = "ISLOGGEDIN";
   static String sharedPreferenceTeacherLoggedInKey = "ISTEACHERLOGGEDIN";
 
@@ -17,6 +18,8 @@ class UserLoginStateHandler {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return await preferences.getBool(sharedPreferenceUserLoggedInKey);
   }
+
+
 
   /// saving data to sharedpreference
   static Future<bool> saveTeacherLoggedInSharedPreference(

@@ -5,6 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:ioc_chatbot/Logics/userProvider.dart';
 import 'package:ioc_chatbot/both_apps.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
+import 'package:ioc_chatbot/views/onboarding%20screens/onboarding_page.dart';
+import 'package:ioc_chatbot/views/onboarding%20screens/splash_screen.dart';
+import 'package:ioc_chatbot/views/students/loginView.dart';
+import 'package:ioc_chatbot/views/students/signUp.dart';
+import 'package:ioc_chatbot/views/teachers/teacher_homeView.dart';
+import 'package:ioc_chatbot/views/teachers/teacher_loginView.dart';
+import 'package:ioc_chatbot/views/teachers/teacher_signupView.dart';
 import 'package:provider/provider.dart';
 
 import 'Logics/app_state.dart';
@@ -51,11 +59,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: AppColors.backgroundScreen
+      ),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        home: BothApps());
+        home: SplashScreen());
   }
 }

@@ -1,4 +1,5 @@
 class SubjectModel {
+
   String subjectID;
   String subjectName;
 

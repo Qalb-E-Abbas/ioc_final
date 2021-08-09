@@ -5,7 +5,7 @@ import 'package:ioc_chatbot/common/dynamicFontSize.dart';
 import 'package:ioc_chatbot/common/end_drawer.dart';
 import 'package:ioc_chatbot/common/loading_widget.dart';
 import 'package:ioc_chatbot/configurations/back_end_configs.dart';
-import 'package:ioc_chatbot/configurations/frontEndConfigs.dart';
+import 'package:ioc_chatbot/configurations/AppColors.dart';
 import 'package:ioc_chatbot/Backend/models/chatModel.dart';
 import 'package:ioc_chatbot/Backend/models/messagesModel.dart';
 import 'package:ioc_chatbot/Backend/models/userModel.dart';
@@ -111,9 +111,7 @@ class _TeacherChatListState extends State<TeacherChatList> {
               ),
         centerTitle: true,
         title: !isSearchingAllow
-            ? Text(
-                "Chat",
-              )
+            ? DynamicFontSize(label: 'chats',)
             : SearchField(onChanged: (val) {
                 setState(() {
                   _searchedOrders(val);
@@ -159,11 +157,12 @@ class _TeacherChatListState extends State<TeacherChatList> {
       endDrawer: EndDrawer(),
       body: _getUI(context, widget.userModel),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.backgroundScreen,
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => StudentsList()));
         },
-        child: Icon(Icons.chat),
+        child: Icon(Icons.chat, color: Colors.black,),
       ),
     );
   }
@@ -184,6 +183,7 @@ class _TeacherChatListState extends State<TeacherChatList> {
         : StreamProvider.value(
             value:
                 _advisorChatServices.getChatList(context, docID: _model.docID),
+
             builder: (context, child) {
               return context.watch<List<ChatModel>>() == null
                   ? LoadingWidget()
@@ -289,6 +289,7 @@ class _TeacherChatListState extends State<TeacherChatList> {
                                                               Navigator.of(context).push(
                                                                   MaterialPageRoute(
                                                                       builder: (builder) =>
+
                                                                           ChatMessageScreen(
                                                                             chatID:
                                                                                 model.chatID,
@@ -299,7 +300,7 @@ class _TeacherChatListState extends State<TeacherChatList> {
                                                                           )));
                                                             },
                                                             child: Container(
-                                                              color: FrontEndConfigs
+                                                              color: AppColors
                                                                   .authFieldBackgroundColor,
                                                               width:
                                                                   MediaQuery.of(
@@ -358,7 +359,7 @@ class _TeacherChatListState extends State<TeacherChatList> {
                                                                             width:
                                                                                 24,
                                                                             decoration:
-                                                                                BoxDecoration(shape: BoxShape.circle, color: FrontEndConfigs.blueTextColor),
+                                                                                BoxDecoration(shape: BoxShape.circle, color: AppColors.blueTextColor),
                                                                             child:
                                                                                 Center(
                                                                               child: DynamicFontSize(
@@ -408,7 +409,7 @@ class _TeacherChatListState extends State<TeacherChatList> {
                                                           .role)));
                                     },
                                     child: Container(
-                                      color: FrontEndConfigs
+                                      color: AppColors
                                           .authFieldBackgroundColor,
                                       width: MediaQuery.of(context).size.width,
                                       child: Center(
